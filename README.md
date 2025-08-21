@@ -72,7 +72,7 @@ fi
 
 # Ejecutar el contenedor con puertos personalizados
 echo "Ejecutando el contenedor..."
-docker run --name xampp-custom -d \\
+docker run --name xampp-custom -d \
   -p 6022:22 \      # SSH
   -p 6033:3306 \    # MySQL
   -p 6080:80 \      # HTTP
