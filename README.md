@@ -35,9 +35,9 @@ RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Exponer puertos personalizados
-EXPOSE 6022  # SSH
-EXPOSE 6033  # MySQL
-EXPOSE 6080  # HTTP
+EXPOSE 6022
+EXPOSE 6033
+EXPOSE 6080
 
 # Iniciar servicios con Supervisor
 CMD ["/usr/bin/supervisord"]
@@ -87,5 +87,16 @@ if [ $? -eq 0 ]; then
     echo " - HTTP: http://localhost:6080"
 else
     echo "Error al ejecutar el contenedor."
+    exit 1
+fi
+
+# Configurar inicio automático del contenedor
+echo "Configurando inicio automático del contenedor..."
+docker update --restart unless-stopped xampp-custom
+
+if [ $? -eq 0 ]; then
+    echo "Inicio automático configurado correctamente."
+else
+    echo "Error al configurar el inicio automático."
     exit 1
 fi
